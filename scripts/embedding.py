@@ -9,10 +9,10 @@ model_dir = Path('./MLProject/catELMo')
 weights = model_dir/'embedders'/'weights.hdf5'
 options = model_dir/'embedders'/'options.json'
 
-embedder = ElmoEmbedder(options,weights,cuda_device=-1) # cuda_device=-1 for CPU
+embedder = ElmoEmbedder(options,weights,cuda_device=0) # cuda_device=-1 for CPU
 
 def catELMo_embedding(x):
-    return torch.tensor(embedder.embed_sentence(list(x))).sum(dim=0).mean(dim=0).tolist()
+    return torch.tensor(embedder.embed_sentences(list(x))).sum(dim=0).mean(dim=0).tolist()
 
 
 dat = pd.read_csv('./MLProject/catELMo/datasets/TCREpitopePairs.csv')
