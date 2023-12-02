@@ -185,7 +185,7 @@ def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test)
     
     es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience = 30)
     #model.fit([X1_train,X2_train], y_train, verbose=0, validation_split=0.20, epochs=200, batch_size = 32, callbacks=[es, model_checkpoint_callback])
-    model.fit([X1_train,X2_train], y_train, verbose=1, validation_split=0.20, epochs=1, batch_size = 32, callbacks=[es, model_checkpoint_callback])
+    model.fit([X1_train,X2_train], y_train, verbose=1, validation_split=0.20, epochs=200, batch_size = 32, callbacks=[es, model_checkpoint_callback])
 #     model.save('models/' + embedding_name + '.hdf5')
     yhat = model.predict([X1_test, X2_test])
    
