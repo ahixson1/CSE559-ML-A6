@@ -205,8 +205,8 @@ def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test,
     model.fit([X1_train,X2_train], y_train, verbose=1, validation_split=0.20, epochs=200, batch_size = 32, callbacks=[es, model_checkpoint_callback])
 #     model.save('models/' + embedding_name + '.hdf5')
     yhat = model.predict([X1_test, X2_test])
-    from pdb import set_trace as bp
-    bp()
+    # from pdb import set_trace as bp
+    # bp()
 
     auc = roc_auc_score(y_test, yhat)  
     print('================Performance========================')
