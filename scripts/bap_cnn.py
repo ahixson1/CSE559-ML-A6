@@ -156,18 +156,18 @@ def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test)
     inputA = Input(shape=(len(X1_train[0]), 1))  
     inputB = Input(shape=(len(X2_train[0]), 1))  
 
-    x1 = Conv1D(1024, kernel_size=1)(inputA)
+    x1 = Conv1D(2048, kernel_size=3)(inputA)
     x1 = BatchNormalization()(x1)
     x1 = Activation('relu')(x1)
     x1 = Dropout(0.3)(x1)
     x1 = GlobalAveragePooling1D()(x1)  
 
     # CNN Encoder for inputA
-    x3 = Conv1D(1024, kernel_size=3)(inputA)
-    x3 = BatchNormalization()(x3)
-    x3 = Activation('relu')(x3)
-    x3 = Dropout(0.3)(x3)
-    x3 = GlobalAveragePooling1D()(x3)  
+    #x3 = Conv1D(1024, kernel_size=3)(inputA)
+    #x3 = BatchNormalization()(x3)
+    #x3 = Activation('relu')(x3)
+    #x3 = Dropout(0.3)(x3)
+    #x3 = GlobalAveragePooling1D()(x3)  
    
     #x5 = Conv1D(2048, kernel_size=5)(inputA)
     #x5 = BatchNormalization()(x5)
@@ -176,17 +176,17 @@ def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test)
     #x5 = GlobalAveragePooling1D()(x5)  
 
     # CNN Encoder for inputB
-    y1 = Conv1D(1024, kernel_size=1)(inputB)
+    y1 = Conv1D(2048, kernel_size=3)(inputB)
     y1 = BatchNormalization()(y1)
     y1 = Activation('relu')(y1)
     y1 = Dropout(0.3)(y1)
     y1 = GlobalAveragePooling1D()(y1)  
 
-    y3 = Conv1D(1024, kernel_size=3)(inputB)
-    y3 = BatchNormalization()(y3)
-    y3 = Activation('relu')(y3)
-    y3 = Dropout(0.3)(y3)
-    y3 = GlobalAveragePooling1D()(y3)  
+    #y3 = Conv1D(1024, kernel_size=3)(inputB)
+    #y3 = BatchNormalization()(y3)
+    #y3 = Activation('relu')(y3)
+    #y3 = Dropout(0.3)(y3)
+    #y3 = GlobalAveragePooling1D()(y3)  
 
     #y5 = Conv1D(2048, kernel_size=5)(inputB)
     #y5 = BatchNormalization()(y5)
@@ -195,20 +195,20 @@ def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test)
     #y5 = GlobalAveragePooling1D()(y5)  
 
     #combined = concatenate([x1, x3, x5, y1, y3, y5])
-    combined = concatenate([x1, x3, y1, y3])
+    combined = concatenate([x1, y1])
     
     z = Dense(2048)(combined)
     z = BatchNormalization()(z)
     z = Activation('relu')(z)
     z = Dropout(0.3)(z)
 
-    z = Dense(1, activation='softmax')(z)
+    z = Dense(1, activation='sigmoid')(z)
     model = Model(inputs=[inputA, inputB], outputs=z)
     model.compile(loss = 'binary_crossentropy', optimizer = 'adam')
     model.summary()
     
     ## model fit
-    checkpoint_filepath = 'models/catelmo_cnn/' + embedding_name +  '.hdf5'
+    checkpoint_filepath = 'models/catelmo_cnn_1layer/' + embedding_name +  '.hdf5'
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_filepath,
                                                                     save_weights_only=True,
                                                                     monitor='val_loss',
