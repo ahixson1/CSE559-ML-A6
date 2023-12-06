@@ -5,6 +5,7 @@ conda create --name bap python=3.8
 module load cuda-10.1.243-gcc-12.1.0
 
 #install libraries
+conda install anaconda
 conda install -c anaconda tensorflow-gpu #installs versions 2.4.1
 pip install keras==2.4.1 scikit-learn==0.24.2 tqdm pandas==1.1.5
 source activate bap
