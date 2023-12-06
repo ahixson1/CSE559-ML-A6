@@ -147,7 +147,7 @@ def load_data_split(dat,split_type, seed):
     return  X1_train, X2_train, y_train, X1_test, X2_test, y_test#, testData, trainData
 
 
-def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test):
+def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test, split):
     # define two sets of inputs
     inputA = Input(shape=(len(X1_train[0]),))
     inputB = Input(shape=(len(X2_train[0]),))
@@ -157,7 +157,7 @@ def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test)
     #x = Dropout(0.3)(x)
     #x = tf.nn.silu(x)
 
-    x = Dense(1536,kernel_initializer = 'he_uniform')(x)
+    x = Dense(1536,kernel_initializer = 'he_uniform')(inputA)
     x = BatchNormalization()(x)
     x = Dropout(0.4)(x)
     x = tf.nn.silu(x)
@@ -193,7 +193,7 @@ def train_(embedding_name,X1_train, X2_train, y_train, X1_test, X2_test, y_test)
     model.summary()
     
     ## model fit
-    checkpoint_filepath = 'models/catELMo_changed/' + embedding_name +  '.hdf5'
+    checkpoint_filepath = 'models/catELMo_changed/' + embedding_name + ' ' + split + '.hdf5'
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_filepath,
                                                                     save_weights_only=True,
                                                                     monitor='val_loss',
@@ -248,7 +248,7 @@ def main(embedding, split,fraction,seed, gpu):
         tr_dat = dat.sample(frac=fraction, replace=True, random_state=seed).reset_index(drop=True) # comment this out if no fraction used
         #X1_train, X2_train, y_train, X1_test, X2_test, y_test, testData, trainData = load_data_split(tr_dat,split, seed)
         X1_train, X2_train, y_train, X1_test, X2_test, y_test = load_data_split(tr_dat,split, seed)
-        auc[idx], accuracy[idx], precision[idx], precision1[idx], precision0[idx], recall[idx], recall1[idx], recall0[idx], f1macro[idx], f1micro[idx] = train_(embedding + '_' + split + '_seed_' + str(seed) + '_fraction_' + str(fraction), X1_train, X2_train, y_train, X1_test, X2_test, y_test)
+        auc[idx], accuracy[idx], precision[idx], precision1[idx], precision0[idx], recall[idx], recall1[idx], recall0[idx], f1macro[idx], f1micro[idx] = train_(embedding + '_' + split + '_seed_' + str(seed) + '_fraction_' + str(fraction), X1_train, X2_train, y_train, X1_test, X2_test, y_test, split)
         
     mean_auc = mean(auc)
     std_auc = std(auc)
