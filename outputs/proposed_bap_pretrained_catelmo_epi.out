@@ -1,0 +1,12 @@
+Mean of AUC = 0.9367493306470243 ,STD of AUC = 0.004710514822018132
+Mean of accuracy = 0.8617526243724326 ,STD of accuracy = 0.008037981750706922
+Mean of precision  = 0.8627699359163785 ,STD of precision = 0.007400237096927685
+Mean of precision1  = 0.858391681228871 ,STD of precision1 = 0.024759187897939433
+Mean of precision0 = 0.867148190603886 ,STD of precision0 = 0.014198976950086708
+Mean of recall = 0.8617700450908925 ,STD of recall = 0.0079789343803936
+Mean of recall1 = 0.8671459315902743 ,STD of recall1 = 0.02133472262777034
+Mean of recall0 =  0.8563941585915108 ,STD of recall0 = 0.03216303624602296
+Mean of f1macro = 0.8616541157823114 ,STD of f1macro = 0.008102466482216623
+Mean of f1micro = 0.8617526243724326 ,STD of f1micro = 0.008037981750706922
+
+rest of the output is present in https://drive.google.com/drive/folders/13ih-HMuSpqG2LZAI3i7HXRMWmvMxgZag?usp=drive_link 
